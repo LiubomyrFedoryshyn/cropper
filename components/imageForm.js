@@ -56,7 +56,7 @@ export default function ImageForm() {
               <p>X coordinates</p>
             </label>
             <input
-              placeholder={'Please, write number of pixels'}
+              placeholder={'Add number of pixels...'}
               type="text"
               id={'x'}
               name="x"
@@ -75,7 +75,7 @@ export default function ImageForm() {
               <p>Y coordinates</p>
             </label>
             <input
-              placeholder={'Please, write number of pixels'}
+              placeholder={'Add number of pixels...'}
               type="text"
               id={'y'}
               name="y"
@@ -96,7 +96,7 @@ export default function ImageForm() {
               <p>Width</p>
             </label>
             <input
-              placeholder={'Please, write number of pixels'}
+              placeholder={'Add number of pixels...'}
               type="text"
               id={'width'}
               name="width"
@@ -115,7 +115,7 @@ export default function ImageForm() {
               <p>Height</p>
             </label>
             <input
-              placeholder={'Please, write number of pixels'}
+              placeholder={'Add number of pixels...'}
               type="text"
               id={'height'}
               name="height"
