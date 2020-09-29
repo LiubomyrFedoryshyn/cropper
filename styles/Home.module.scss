@@ -16,4 +16,10 @@
   align-items: center;
 }
 
+@media only screen and (max-width: 991px) {
+  .main {
+    width: 100%;
+  }
+}
+
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,700i,900&display=swap');

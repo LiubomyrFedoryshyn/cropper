@@ -8,13 +8,10 @@ export default function ImageForm() {
   const [y, setY] = useState('');
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-  const validationChech = (value) => {
+  const validationCheck = (value) => {
     return value == Math.floor(value) && value > 0;
-  };
-
-  const cropImage = () => {
-    console.log(x, y, width, height);
   };
 
   const onReset = () => {
@@ -22,10 +19,35 @@ export default function ImageForm() {
     setY('');
     setWidth('');
     setHeight('');
+    setImageLoaded(false);
+  };
+
+  const uploadFilePreview = (e) => {
+    if (e.target.files[0]) {
+      setImageLoaded(true);
+      let output = document.getElementById('hidden-image');
+      output.src = URL.createObjectURL(e.target.files[0]);
+    }
+  };
+
+  const onCrop = () => {
+    const canvas = document.getElementById('myCanvas');
+    let ctx = canvas.getContext('2d');
+    let img = document.getElementById('hidden-image');
+    ctx.drawImage(img, x, y, width, height);
+    let image = canvas
+      .toDataURL('image/png', 1.0)
+      .replace('image/png', 'image/cropped-image');
+    let link = document.createElement('a');
+    link.download = 'cropped-image.png';
+    link.href = image;
+    link.click();
   };
 
   return (
     <div className={styles.formWrapper}>
+      <canvas width={width} height={height} id="myCanvas"></canvas>
+      <img id="hidden-image" src="#" alt="image-for-canvas" />
       <form autoComplete="off" name="ImageForm">
         <div className={classNames(styles.field, styles.flexedFields)}>
           <div className={styles.control}>
@@ -39,11 +61,11 @@ export default function ImageForm() {
               name="x"
               value={x}
               className={classNames(
-                x && !validationChech(x) && styles.isDanger
+                x && !validationCheck(x) && styles.isDanger
               )}
               onChange={(e) => setX(e.target.value)}
             />
-            {x && !validationChech(x) && (
+            {x && !validationCheck(x) && (
               <p className={styles.errorMessage}>Invalid format</p>
             )}
           </div>
@@ -58,11 +80,11 @@ export default function ImageForm() {
               name="y"
               value={y}
               className={classNames(
-                y && !validationChech(y) && styles.isDanger
+                y && !validationCheck(y) && styles.isDanger
               )}
               onChange={(e) => setY(e.target.value)}
             />
-            {y && !validationChech(y) && (
+            {y && !validationCheck(y) && (
               <p className={styles.errorMessage}>Invalid format</p>
             )}
           </div>
@@ -79,11 +101,11 @@ export default function ImageForm() {
               name="width"
               value={width}
               className={classNames(
-                width && !validationChech(width) && styles.isDanger
+                width && !validationCheck(width) && styles.isDanger
               )}
               onChange={(e) => setWidth(e.target.value)}
             />
-            {width && !validationChech(width) && (
+            {width && !validationCheck(width) && (
               <p className={styles.errorMessage}>Invalid format</p>
             )}
           </div>
@@ -98,11 +120,11 @@ export default function ImageForm() {
               name="height"
               value={height}
               className={classNames(
-                height && !validationChech(height) && styles.isDanger
+                height && !validationCheck(height) && styles.isDanger
               )}
               onChange={(e) => setHeight(e.target.value)}
             />
-            {height && !validationChech(height) && (
+            {height && !validationCheck(height) && (
               <p className={styles.errorMessage}>Invalid format</p>
             )}
           </div>
@@ -113,11 +135,12 @@ export default function ImageForm() {
               <p className={styles.imageLoader}>Choose your image</p>
             </label>
             <input
+              multiplea
               accept=".png,.jpg,.jpeg"
               type="file"
               id={'image-photo'}
               name="image-photo"
-              // onChange={(e) => uploadFilePreview(e, fileObj.id, 'id')}
+              onChange={uploadFilePreview}
             />
           </div>
           <div className={classNames(styles.field, styles.flexedFields)}>
@@ -134,12 +157,13 @@ export default function ImageForm() {
             <div className={styles.control}>
               <button
                 disabled={
-                  !validationChech(height) ||
-                  !validationChech(width) ||
-                  !validationChech(x) ||
-                  !validationChech(y)
+                  !validationCheck(height) ||
+                  !validationCheck(width) ||
+                  !validationCheck(x) ||
+                  !validationCheck(y) ||
+                  !imageLoaded
                 }
-                onClick={cropImage}
+                onClick={onCrop}
                 type="button"
                 className={styles.submitButton}
               >
