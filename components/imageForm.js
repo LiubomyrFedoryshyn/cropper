@@ -20,6 +20,7 @@ export default function ImageForm() {
     setWidth('');
     setHeight('');
     setImageLoaded(false);
+    document.getElementById('image-photo').value = '';
   };
 
   const uploadFilePreview = (e) => {
@@ -124,12 +125,17 @@ export default function ImageForm() {
           </div>
         </div>
         <div className={classNames(styles.field, styles.flexedActions)}>
-          <div className={classNames(styles.control, styles.chooseFile)}>
+          <div
+            className={classNames(
+              styles.control,
+              styles.chooseFile,
+              imageLoaded && styles.loaded
+            )}
+          >
             <label htmlFor={'image-photo'}>
               <p className={styles.imageLoader}>Choose your image</p>
             </label>
             <input
-              multiplea
               accept=".png,.jpg,.jpeg"
               type="file"
               id={'image-photo'}
@@ -140,7 +146,7 @@ export default function ImageForm() {
           <div className={classNames(styles.field, styles.flexedFields)}>
             <div className={styles.control}>
               <button
-                disabled={!height && !width && !x && !y}
+                disabled={!height && !width && !x && !y && !imageLoaded}
                 onClick={onReset}
                 type="button"
                 className={styles.resetButton}
