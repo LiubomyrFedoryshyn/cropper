@@ -11,7 +11,7 @@ export default function ImageForm() {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const validationCheck = (value) => {
-    return value == Math.floor(value) && value > 0;
+    return value ? value == Math.floor(value) && value > 0 : true;
   };
 
   const onReset = () => {
@@ -60,12 +60,10 @@ export default function ImageForm() {
               id={'x'}
               name="x"
               value={x}
-              className={classNames(
-                x && !validationCheck(x) && styles.isDanger
-              )}
+              className={classNames(!validationCheck(x) && styles.isDanger)}
               onChange={(e) => setX(e.target.value)}
             />
-            {x && !validationCheck(x) && (
+            {!validationCheck(x) && (
               <p className={styles.errorMessage}>Invalid format</p>
             )}
           </div>
@@ -79,12 +77,10 @@ export default function ImageForm() {
               id={'y'}
               name="y"
               value={y}
-              className={classNames(
-                y && !validationCheck(y) && styles.isDanger
-              )}
+              className={classNames(!validationCheck(y) && styles.isDanger)}
               onChange={(e) => setY(e.target.value)}
             />
-            {y && !validationCheck(y) && (
+            {!validationCheck(y) && (
               <p className={styles.errorMessage}>Invalid format</p>
             )}
           </div>
@@ -100,12 +96,10 @@ export default function ImageForm() {
               id={'width'}
               name="width"
               value={width}
-              className={classNames(
-                width && !validationCheck(width) && styles.isDanger
-              )}
+              className={classNames(!validationCheck(width) && styles.isDanger)}
               onChange={(e) => setWidth(e.target.value)}
             />
-            {width && !validationCheck(width) && (
+            {!validationCheck(width) && (
               <p className={styles.errorMessage}>Invalid format</p>
             )}
           </div>
@@ -120,11 +114,11 @@ export default function ImageForm() {
               name="height"
               value={height}
               className={classNames(
-                height && !validationCheck(height) && styles.isDanger
+                !validationCheck(height) && styles.isDanger
               )}
               onChange={(e) => setHeight(e.target.value)}
             />
-            {height && !validationCheck(height) && (
+            {!validationCheck(height) && (
               <p className={styles.errorMessage}>Invalid format</p>
             )}
           </div>
